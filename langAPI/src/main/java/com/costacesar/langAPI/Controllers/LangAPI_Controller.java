@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.costacesar.langAPI.Models.Language;
 import com.costacesar.langAPI.Repos.LangRepo;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 public class LangAPI_Controller
 {
@@ -18,7 +20,14 @@ public class LangAPI_Controller
     @GetMapping(value="/hello")
     public String getTest()
     {
-        return "Hello, Spring!";
+        return "Hello, Spring! Essa é uma simples API que cataloga linguagens de programação, suas imagens e (o meu) rank de cada uma delas.";
+    }
+
+    @PostMapping(value="/LangList")
+    public Language postLangList(@RequestBody Language add, HttpServletResponse response)
+    {   
+        response.setStatus(201);
+        return repository.save(add);
     }
 
     @GetMapping(value="/LangList")
@@ -55,9 +64,4 @@ public class LangAPI_Controller
         return output;
     }
 
-    @PostMapping(value="/LangList")
-    public Language postLangList(@RequestBody Language add)
-    {   
-        return repository.save(add);
-    }
 }
